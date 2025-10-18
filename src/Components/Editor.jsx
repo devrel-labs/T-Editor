@@ -67,12 +67,12 @@ export default function Editor() {
           <br/>
           <span style="margin-top: 24px;">🚀 Key Features</span>
           <ul>
-          <li> &nbsp;  &nbsp;  •  &nbsp; Supports <strong>paragraphs</strong>, and <strong>horizontal rules</strong></li>
-          <li>  &nbsp;  &nbsp; •  &nbsp; Flexible <strong>font family</strong> and <strong>font size</strong> controls</li>
-          <li>   &nbsp;  &nbsp; •  &nbsp; Rich <strong>text formatting</strong>: Bold, Italic, Strike-through, Highlight</li>
-          <li>  &nbsp;  &nbsp;  •  &nbsp; Inline <strong>color customization</strong></li>
-          <li>  &nbsp;  &nbsp;  • &nbsp; <strong>Undo/Redo</strong> functionality for seamless editing</li>
-          <li>   &nbsp;  &nbsp; • &nbsp; <strong>Copy-paste images</strong> with base64 support</li>
+          <li>   &nbsp;  &nbsp;  •  &nbsp; Supports <strong>paragraphs</strong>, and <strong>horizontal rules</strong></li>
+          <li>   &nbsp;  &nbsp;  •  &nbsp; Flexible <strong>font family</strong> and <strong>font size</strong> controls</li>
+          <li>   &nbsp;  &nbsp;  •  &nbsp; Rich <strong>text formatting</strong>: Bold, Italic, Strike-through, Highlight</li>
+          <li>   &nbsp;  &nbsp;  •  &nbsp; Inline <strong>color customization</strong></li>
+          <li>   &nbsp;  &nbsp;  •  &nbsp; <strong>Undo/Redo</strong> functionality for seamless editing</li>
+          <li>   &nbsp;  &nbsp;  •  &nbsp; <strong>Copy-paste images</strong> with base64 support</li>
           </ul>
           <br/>
 
