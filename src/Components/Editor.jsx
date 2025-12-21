@@ -6,51 +6,37 @@ import StarterKit from '@tiptap/starter-kit'
 import Highlight from '@tiptap/extension-highlight'
 import { FontSize } from '../extensions/FontSize'
 import Image from '@tiptap/extension-image';
-import { Redo, Undo } from 'lucide-react'
+import { CloudCheck, Redo, Undo, Check } from 'lucide-react'
 import editorScreenshot from '../assets/images/Teditor-ss.png';
 import AestheticOne from '../assets/images/Aesthetic-1.png';
+import { useState } from 'react'
+
 
 export default function Editor() {
+    const [isSaved, setIsSaved] = useState(false)
+    const [popUpText, setPopUpText] = useState();
 
-    const FontFamilies = [
-        "sans - serif",
-        "serif",
-        "monospace",
-        "Lora",
-        "Montserrat",
-        "Merriweather",
-        "Source Code Pro",
-        "Arial",
-        "Helvetica",
-        "Georgia",
-        "Times New Roman",
-        "Courier New",
-        "Verdana",
-        "Trebuchet MS",
-        "Lucida Console",
-        "Palatino Linotype",
-        "Tahoma",
-    ]
-{/* <img src="${AestheticOne}" alt="Teditor Screenshot" width="400px" height="100px"/> */}
-    const editor = useEditor({
-        extensions: [
-            StarterKit.configure({
-                heading: false,
-            }),
-            Image.configure({
-                inline: false,
-                allowBase64: true,
-            }),
-            TextStyle,
-            Color,
-            Highlight,
-            FontSize,
-            FontFamily,
-            Heading.configure({
-                levels: [1, 2, 3, 4, 5, 6]
-            }),
-        ],
-        content: `
+    const savingWriting = () => {
+        if (!editor) return
+        const content = editor.getJSON()
+        localStorage.setItem("editorContent", JSON.stringify(content))
+        setPopUpText(<> <span className='text-green-400 text-xs '><Check size={18} /> </span>we saved your writing, now go and touch some grass</>)
+        showPopUp()
+    }
+    const clearingWriting = () => {
+        localStorage.removeItem("editorContent")
+        setPopUpText(<> <span className='text-red-400 text-xs '><Check size={18} /> </span>we cleared your shit now write some text</>)
+        showPopUp()
+    }
+
+    function showPopUp() {
+        setIsSaved(true);
+        setTimeout(() => {
+            setIsSaved(false)
+        }, 2000)
+    }
+
+    const defaultContent = `
           <strong>TEDITOR</strong>
           
           <br />
@@ -65,7 +51,7 @@ export default function Editor() {
           </span>
           <br />
           <br/>
-          <span style="margin-top: 24px;">🚀 Key Features</span>
+          <span style="margin-top: 24px;">Key Features</span>
           <ul>
           <li>   &nbsp;  &nbsp;  •  &nbsp; Supports <strong>paragraphs</strong>, and <strong>horizontal rules</strong></li>
           <li>   &nbsp;  &nbsp;  •  &nbsp; Flexible <strong>font family</strong> and <strong>font size</strong> controls</li>
@@ -90,7 +76,51 @@ export default function Editor() {
            <a href="https://tiptap.dev/docs/editor/getting-started/install/react" target="_blank">TIPTAP docs <strong>here</strong></a>
           </p>
 
-        `,
+        `;
+
+    const FontFamilies = [
+        "sans - serif",
+        "serif",
+        "monospace",
+        "Lora",
+        "Montserrat",
+        "Merriweather",
+        "Source Code Pro",
+        "Arial",
+        "Helvetica",
+        "Georgia",
+        "Times New Roman",
+        "Courier New",
+        "Verdana",
+        "Trebuchet MS",
+        "Lucida Console",
+        "Palatino Linotype",
+        "Tahoma",
+    ]
+    {/* <img src="${AestheticOne}" alt="Teditor Screenshot" width="400px" height="100px"/> */ }
+    const editor = useEditor({
+        extensions: [
+            StarterKit.configure({
+                heading: false,
+            }),
+            Image.configure({
+                inline: false,
+                allowBase64: true,
+            }),
+            TextStyle,
+            Color,
+            Highlight,
+            FontSize,
+            FontFamily,
+            Heading.configure({
+                levels: [1, 2, 3, 4, 5, 6]
+            }),
+        ],
+        // content: defaultContent,
+        content: (() => {
+            const savedContent = localStorage.getItem("editorContent")
+            return savedContent ? JSON.parse(savedContent) : defaultContent;
+        })(),
 
         editorProps: {
             handlePaste(view, event) {
@@ -117,9 +147,9 @@ export default function Editor() {
     })
 
     return (
-        <div className="w-full">
+        <div className="relative w-full">
 
-            <div className='w-full flex items-center justify-center'>
+            <div className='fixed top-0 p-6 w-full flex items-center justify-center'>
 
                 <div className='inline-flex items-center justify-center rounded-xl bg-[var(--light-background)] px-3 py-1 gap-1 mr-3'>
                     {/* undo button */}
@@ -225,8 +255,33 @@ export default function Editor() {
                         className='h-7 w-7 text-sm cursor-pointer hover:bg-[var(--light-background)] border-white/50 '
                     />
                 </div>
+
+
+                <div className='inline-flex items-center hover:bg-red-700 font-bold hover:text-white transition-all justify-center rounded-xl bg-[var(--light-background)] gap-1 ml-3'>
+                    {/* undo button */}
+                    <button
+                        onClick={clearingWriting}
+                        className='capitalize text-xs flex items-center px-3 py-1 justify-center rounded-full cursor-pointer'
+                    >
+                        clear storage
+                    </button>
+
+
+                </div>
             </div>
 
+            <div className='fixed bottom-[12vh] w-full flex items-center justify-center'>
+                <button
+                    className='bg-[var(--light-background)] absolute right-[7vw] px-4 py-2 flex items-center justify-center gap-2 rounded-xl font-bold cursor-pointer hover:bg-black transition'
+                    onClick={savingWriting}
+                >
+                    Save writing <span className='text-gray-300'> <CloudCheck /></span>
+                </button>
+            </div>
+
+            <div className='fixed top-[15vh] w-full flex items-center justify-center'>
+                <div className={`bg-[var(--light-background)] absolute right-[4vw] px-3 py-2 flex items-center text-xs justify-center gap-2 rounded-xl font-medium transition-all duration-1000 z-1000 capitalize ${isSaved ? "translate-x-[0vw]" : "translate-x-[100vw]"}`}>{popUpText}</div>
+            </div>
 
             <div className="w-full flex items-start justify-center mt-10">
                 <div
@@ -239,6 +294,8 @@ export default function Editor() {
                     />
                 </div>
             </div>
-        </div>
+
+
+        </div >
     )
 }
