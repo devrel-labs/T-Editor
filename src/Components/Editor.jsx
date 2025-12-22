@@ -149,7 +149,7 @@ export default function Editor() {
     return (
         <div className="relative w-full">
 
-            <div className='fixed top-0 p-6 w-full flex items-center justify-center'>
+            <div className='fixed top-0 p-6 w-full flex items-center justify-center z-1000'>
 
                 <div className='inline-flex items-center justify-center rounded-xl bg-[var(--light-background)] px-3 py-1 gap-1 mr-3'>
                     {/* undo button */}
